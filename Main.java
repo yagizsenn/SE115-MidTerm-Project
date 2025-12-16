@@ -9,7 +9,7 @@ public class Main {
     static String[] commodities = {"Gold", "Oil", "Silver", "Wheat", "Copper"};
     static String[] months = {"January","February","March","April","May","June",
                               "July","August","September","October","November","December"};
-    
+    static int[][][] Data = new int[MONTHS][DAYS][COMMS];
 
     // ======== REQUIRED METHOD LOAD DATA (Students fill this) ========
     public static void loadData() {
@@ -18,7 +18,23 @@ public class Main {
     // ======== 10 REQUIRED METHODS (Students fill these) ========
 
     public static String mostProfitableCommodityInMonth(int month) {
-        return "DUMMY"; 
+        if(month <0 || month>=MONTHS){return "INVALID_MONTH";}
+        int[] totals = new int[COMMS];
+
+        for(int i = 0; i < DAYS ; i++){
+            for(int j = 0; j < COMMS; j++){
+                totals[j] += Data[month][i][j];
+            }
+        }
+        int maxProfit = Integer.MIN_VALUE;
+        int maxIndex=-1;
+        for(int j =0;j<COMMS;j++){
+            if (totals[j]>maxProfit){
+                maxProfit = totals[j];
+                maxIndex = j;
+            }
+        }
+        return commodities[maxIndex] + " " + maxProfit;
     }
 
     public static int totalProfitOnDay(int month, int day) {
