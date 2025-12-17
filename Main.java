@@ -45,7 +45,7 @@ public class Main {
                     }
                     if (cIndex == -1) continue;
 
-                    profits[m][day][cIndex] += profit;
+                    Data[m][day][cIndex] += profit;
                 }
             }catch (Exception e) {
 
@@ -53,7 +53,7 @@ public class Main {
                 try {
                     if (br != null) br.close();
                 }catch (Exception e) {
-                    
+
                 }
             }
         }
@@ -82,11 +82,37 @@ public class Main {
     }
 
     public static int totalProfitOnDay(int month, int day) {
-        return 1234;
-    }
+        if (month < 0 || month >= MONTHS || day < 1 || day > DAYS)
+            return -99999;
+
+        int sum = 0;
+        for(int c= 0 ; c < COMMS; c++) {
+            sum+= Data[month][day - 1][c];
+        }
+        return sum;
+
+         }
 
     public static int commodityProfitInRange(String commodity, int from, int to) {
-        return 1234;
+        if (from < 1 || to > DAYS || from > to) return -99999;
+
+        int cIndex = -1;
+        for(int c = 0; c < COMMS; c++) {
+            if(commodities[c].equals(commodity)) {
+                cIndex = c;
+                break;
+            }
+        }
+        if (cIndex == -1) return -99999;
+
+        int sum = 0;
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = from -1; d <= to -1; d++) {
+                sum += Data[m][d][cIndex];
+
+            }
+        }
+        return sum;
     }
 
     public static int bestDayOfMonth(int month) { 
