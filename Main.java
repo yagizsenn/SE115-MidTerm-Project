@@ -13,6 +13,50 @@ public class Main {
 
     // ======== REQUIRED METHOD LOAD DATA (Students fill this) ========
     public static void loadData() {
+        for(int m = 0; m < MONTHS; m++) {
+            String fileName = "Data_Files/" + months[m] + ".txt";
+            BufferedReader br = null;
+
+            try {
+                br = new BufferedReader(new FileReader(fileName));
+                String line;
+
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length != 3) continue;
+
+                    int day;
+                    int profit;
+
+                    try {
+                        day = Integer.parseInt(parts[0].trim()) - 1;
+                        profit = Integer.parseInt(parts[2].trim());
+                    } catch (Exception e) {
+                        continue;
+                    }
+
+                    if (day < 0 || day >= DAYS) continue;
+                    int cIndex = -1;
+                    for(int c = 0; c < COMMS; c++) {
+                        if (commodities[c].equals(parts[1].trim())) {
+                            cIndex = c;
+                            break;
+                        }
+                    }
+                    if (cIndex == -1) continue;
+
+                    profits[m][day][cIndex] += profit;
+                }
+            }catch (Exception e) {
+
+            }finally {
+                try {
+                    if (br != null) br.close();
+                }catch (Exception e) {
+                    
+                }
+            }
+        }
     }
 
     // ======== 10 REQUIRED METHODS (Students fill these) ========
