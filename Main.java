@@ -160,8 +160,30 @@ public class Main {
         return months[bestMonth];
     }
 
-    public static int consecutiveLossDays(String comm) { 
-        return 1234; 
+    public static int consecutiveLossDays(String comm) {
+        int cIndex = -1;
+        for (int c = 0; c < COMMS; c++) {
+            if (commodities[c].equals(comm)) {
+                cIndex = c;
+                break;
+            }
+        }
+        if(cIndex == -1) return -1;
+
+        int maxStreak = 0;
+        int current = 0;
+
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                if (Data[m][d][cIndex] < 0) {
+                    current++;
+                    if (current > maxStreak) maxStreak = current;
+                } else {
+                    current = 0;
+                }
+            }
+        }
+        return maxStreak;
     }
     
     public static int daysAboveThreshold(String comm, int threshold) { 
