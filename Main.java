@@ -225,8 +225,25 @@ public class Main {
         return maxSwing;
     }
     
-    public static String compareTwoCommodities(String c1, String c2) { 
-        return "DUMMY is better by 1234"; 
+    public static String compareTwoCommodities(String c1, String c2) {
+        int i1 = -1, i2 = -1;
+
+        for (int i = 0; i < COMMS; i++) {
+            if(commodities[i].equals(c1)) i1 = i;
+            if(commodities[i].equals(c2)) i2 = i;
+        }
+        if (i1 == -1 || i2 == -1) return "INVALID_COMMODITY";
+
+        int sum1 = 0, sum2 = 0;
+        for (int m = 0; m < MONTHS; m++) {
+            for(int d = 0; d < DAYS; d++) {
+                sum1 += Data[m][d][i1];
+                sum2 += Data[m][d][i2];
+            }
+        }
+        if(sum1 > sum2) return c1 + "is better by" + (sum1 - sum2);
+        if (sum2 > sum1) return c2 + "is better by" + (sum2 - sum1);
+        return "Equal";
     }
     
     public static String bestWeekOfMonth(int month) { 
