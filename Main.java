@@ -246,8 +246,25 @@ public class Main {
         return "Equal";
     }
     
-    public static String bestWeekOfMonth(int month) { 
-        return "DUMMY"; 
+    public static String bestWeekOfMonth(int month) {
+        if ( month < 0 || month >= MONTHS) return "INVALID_MONTH";
+
+        int bestWeek = 1;
+        int bestSum = Integer.MIN_VALUE;
+
+        for (int w = 0; w < 4; w++) {
+            int sum  = 0;
+            for ( int d = w * 7; d < w * 7 + 7; d++) {
+                for( int c = 0; c < COMMS; c++ ) {
+                    sum += Data[month][d][c];
+                }
+            }
+            if (sum > bestSum) {
+                bestSum = sum;
+                bestWeek = w + 1;
+            }
+        }
+        return "Week" + bestWeek;
     }
 
     public static void main(String[] args) {
